@@ -12,7 +12,7 @@ myapp.use('/api/v1/vendors', vendor )
 
 try {
   await mongoose
-    .connect(process.env.MongoURI)
+    .connect("mongodb+srv://dudejagarvit3:Garvit1839@cluster0.aa2bbme.mongodb.net/")
     .then(() => {
       console.log("DataBase Connected");
     })
