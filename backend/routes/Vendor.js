@@ -3,8 +3,6 @@ import {signIn,signUp} from '../Controllers/authControllers.js'
 
 const vendor = Router();
 
-
-
 vendor.post("/signUp", signUp);
 // vendor.post("/signIn", signIn);
 
