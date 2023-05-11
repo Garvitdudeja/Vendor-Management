@@ -2,45 +2,62 @@ import mongoose  from "mongoose";
 import bcypt from 'bcryptjs'
 
 const VendorSchema = mongoose.Schema({
-    firstName: {
+    NameOfTheCompany: {
         type:String,
-        required : true,
-        required: [true, 'Please tell us your name']
+        required: [true, 'Please add Name of the Company']
     },
-    lastName: {
-        type:String,
+    Address: String,
+    Street: String,
+    State:String,
+    PinCode:{
+        type: Number,
+        length: 6
     },
-    email: {
-        type: String,
-        required: [true, 'Please Add your Email address'],
-        unique: true
+    ContactPersonName: String,
+    PrimaryMobileNumber:{
+        type: Number,
+        length: [10,'Length must be 10']
     },
-    phoneNumber:{
-        type: String,
-        required: [true, 'Please Add your Phone Number'],
-        length: 10,
-        unique: true
+    SecondaryMobileNumber:{
+        type: Number,
+        length: 10
     },
-    password:{
+    PrimaryEmailID:{
         type: String,
         required: true,
-        select: false
+        unique: true
     },
-    address: [{
+    SecondaryEmailID: String,
+    BankName: String,
+    BankAddress: String,
+    BankAccountNumber: String,
+    BankIFSCCode:{
+        type: Number,
+        length: 11
+    },
+    TypeOfVendor: String,
+    FrequencyBillSubmission: String,
+    GSTInputCred: String,
+    TDSApplicabilityType: String,
+    LowerTDSCertificate:String,
+    LowerTaxDeductionCertificate: String,
+    PurchaseOfService:String,
+    Password:{
         type: String,
-    }]
+        required: true
+    }
 })
 
 
 VendorSchema.pre('save',async function(next){
-    if(!this.isModified('password') ) return next();
-    this.password=  bcypt.hashSync(this.password,12);
+    if(!this.isModified('Password') ) return next();
+    this.Password=  bcypt.hashSync(this.Password,12);
 })
 
 
-VendorSchema.methods.comparePassword = function async(oldPassword,newPassword){
-    return bcypt.compare(oldPassword,newPassword)
-}
+// VendorSchema.methods.comparePassword = function async(oldPassword,newPassword){
+//     return bcypt.compare(oldPassword,newPassword)
+// }
 
 const vendorsModel = mongoose.model('vendors',VendorSchema);
 export default vendorsModel;

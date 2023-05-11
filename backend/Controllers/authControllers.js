@@ -26,16 +26,9 @@ const signIn = async (req, res, next) => {
 
 const signUp = async (req, res, next) => {
     try {
-      const { firstName, lastName, email, phoneNumber, password } = req.body.data;
-      const vendor = await vendorsModel.create({
-        email,
-        lastName,
-        phoneNumber,
-        firstName,
-        password,
-      });
+      const vendor = await vendorsModel.create(req.body.data);
       await vendor.save();
-      res.json({ message: vendor }).status(200);
+      res.json({ message: vendor, token: await generateJWT(vendor) }).status(200);
     } catch (error) {
       res.json({ error: error.message }).status(200);
     }
