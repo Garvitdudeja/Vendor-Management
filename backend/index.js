@@ -31,3 +31,5 @@ Tiger.get('/',(req,res)=>{
 })
 
 Tiger.listen(4000,()=>{console.log("worked")});
+
+export {Tiger};
