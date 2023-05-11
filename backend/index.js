@@ -1,5 +1,5 @@
-// import dotenv from 'dotenv'
-// dotenv.config()
+import dotenv from 'dotenv'
+dotenv.config()
 import express from "express";
 import cors from 'cors';
 // import mongoose from "mongoose";
@@ -10,9 +10,9 @@ myapp.use(express.json());
 myapp.use(cors());
 // myapp.use('/api/v1/vendors', vendor )
 
-// await mongoose.connect(process.env.MongoURI).then(()=>{
-//     console.log('DataBase Connected');
-// }).catch((error)=>{console.log(error)});
+await mongoose.connect(process.env.MongoURI).then(()=>{
+    console.log('DataBase Connected');
+}).catch((error)=>{console.log(error)});
 
 
 myapp.get("/",(req,res)=>{
