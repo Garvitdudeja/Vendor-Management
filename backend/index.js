@@ -19,3 +19,5 @@ myapp.get("/",(req,res)=>{
     res.json({message: "Request Accepted"})
 })
 myapp.listen(4000,()=>{console.log("server up and Running")})
+
+export default myapp;
