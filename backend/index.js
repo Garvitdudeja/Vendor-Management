@@ -10,7 +10,7 @@ myapp.use(express.json());
 myapp.use(cors());
 myapp.use('/api/v1/vendors', vendor )
 
-try {
+
   await mongoose
     .connect("mongodb+srv://dudejagarvit3:Garvit1839@cluster0.aa2bbme.mongodb.net/")
     .then(() => {
@@ -19,9 +19,7 @@ try {
     .catch((error) => {
       console.log(error);
     });
-} catch (error) {
-  console.log(error);
-}
+
 
 myapp.get("/", (req, res) => {
   res.json({ message: "Request Accepted" });
