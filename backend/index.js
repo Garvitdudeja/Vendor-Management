@@ -3,16 +3,16 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-// import vendor from './routes/Vendor.js';
+import vendor from './routes/Vendor.js';
 
 const myapp = express();
 myapp.use(express.json());
 myapp.use(cors());
-// myapp.use('/api/v1/vendors', vendor )
+myapp.use('/api/v1/vendors', vendor )
 
 try {
   await mongoose
-    .connect("process.env.MongoURI")
+    .connect(process.env.MongoURI)
     .then(() => {
       console.log("DataBase Connected");
     })
