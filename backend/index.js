@@ -20,4 +20,4 @@ myapp.get("/",(req,res)=>{
 })
 myapp.listen(4000,()=>{console.log("server up and Running")})
 
-export default myapp;
+export {myapp}
