@@ -15,20 +15,18 @@
 // }).catch((error)=>{console.log(error)});
 
 
-// myapp.get("/",(req,res)=>{
-//     res.json({message: "Request Accepted"})
-// })
-// myapp.listen(4000,()=>{console.log("server up and Running")})
 
-// export {myapp};
 
 import express from 'express';
 
 const Tiger = express();
 
-Tiger.get('/',(req,res)=>{
-    res.json("please work")
+Tiger.get("/",(req,res)=>{
+    res.json({message: "Request Accepted"})
 })
+myapp.listen(4000,()=>{console.log("server up and Running")})
+
+
 
 Tiger.listen(4000,()=>{console.log("worked")});
 
