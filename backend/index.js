@@ -4,12 +4,12 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 
-// import vendor from './routes/Vendor.js';
+import vendor from './routes/Vendor.js';
 
 const myapp = express();
 myapp.use(express.json());
 myapp.use(cors());
-// myapp.use('/api/v1/vendors', vendor )
+myapp.use('/api/v1/vendors', vendor )
 
 
   await mongoose
