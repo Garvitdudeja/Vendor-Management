@@ -1,63 +1,62 @@
-import mongoose  from "mongoose";
-import bcypt from 'bcryptjs'
+import mongoose from "mongoose";
+import bcypt from "bcryptjs";
 
 const VendorSchema = mongoose.Schema({
-    NameOfTheCompany: {
-        type:String,
-        required: [true, 'Please add Name of the Company']
-    },
-    Address: String,
-    Street: String,
-    State:String,
-    PinCode:{
-        type: Number,
-        length: 6
-    },
-    ContactPersonName: String,
-    PrimaryMobileNumber:{
-        type: Number,
-        length: [10,'Length must be 10']
-    },
-    SecondaryMobileNumber:{
-        type: Number,
-        length: 10
-    },
-    PrimaryEmailID:{
-        type: String,
-        required: true,
-        unique: true
-    },
-    SecondaryEmailID: String,
-    BankName: String,
-    BankAddress: String,
-    BankAccountNumber: String,
-    BankIFSCCode:{
-        type: Number,
-        length: 11
-    },
-    TypeOfVendor: String,
-    FrequencyBillSubmission: String,
-    GSTInputCred: String,
-    TDSApplicabilityType: String,
-    LowerTDSCertificate:String,
-    LowerTaxDeductionCertificate: String,
-    PurchaseOfService:String,
-    Password:{
-        type: String,
-        required: true
-    }
-})
+  NameOfTheCompany: {
+    type: String,
+    required: [true, "Please add Name of the Company"],
+  },
+  Address: String,
+  Street: String,
+  State: String,
+  PinCode: {
+    type: Number,
+    length: 6,
+  },
+  ContactPersonName: String,
+  PrimaryMobileNumber: {
+    type: Number,
+    length: 10,
+  },
+  SecondaryMobileNumber: {
+    type: String,
+    maxLength: 10,
+    minLength: 10,
+  },
+  PrimaryEmailID: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  SecondaryEmailID: String,
+  BankName: String,
+  BankAddress: String,
+  BankAccountNumber: String,
+  BankIFSCCode: {
+    type: String,
+    length: 11,
+  },
+  TypeOfVendor: String,
+  FrequencyBillSubmission: String,
+  GSTInputCred: String,
+  TDSApplicabilityType: String,
+  LowerTDSCertificate: String,
+  LowerTaxDeductionCertificate: String,
+  PurchaseOfService: String,
+  Password: {
+    type: String,
+    required: true,
+  },
+});
 
-
-VendorSchema.pre('save',async function(next){
-    if(!this.isModified('Password') ) return next();
-    this.Password=  bcypt.hashSync(this.Password,12);
-})
-
+VendorSchema.pre("save", async function (next) {
+  if (!this.isModified("Password")) return next();
+  this.Password = bcypt.hashSync(this.Password, 12);
+});
 
 // VendorSchema.methods.comparePassword = function async(oldPassword,newPassword){
 //     return bcypt.compare(oldPassword,newPassword)
 // }
 
-const vendorsModel = mongoose.model('vendors',VendorSchema);
+const vendorsModel = mongoose.model("vendors", VendorSchema);
 export default vendorsModel;
