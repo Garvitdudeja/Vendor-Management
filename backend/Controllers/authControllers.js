@@ -14,14 +14,16 @@ const signIn = async (req, res, next) => {
     if (!vendor && !vendor.comparePassword(password, vendor.password)) {
       res.json({ message: "Please check or Email address or Password" });
     }
+    let token= await generateJWT(vendor)
+    res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
     res
       .json({
         message: "Successfully Loged in",
-        token: await generateJWT(vendor),
+        token,
       })
       .status(200);
   } catch (error) {
-    res.json({ error: error.message }).status(200);
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -76,7 +78,9 @@ const signUp = async (req, res, next) => {
       Password,
     });
     await vendor.save();
-    res.json({ message: vendor, token: await generateJWT(vendor) }).status(200);
+    let token= await generateJWT(vendor)
+    res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
+    res.status(200).json({ message: vendor, token});
   } catch (error) {
     res.status(400).json({ error: error.message,sucess: false });
   }
