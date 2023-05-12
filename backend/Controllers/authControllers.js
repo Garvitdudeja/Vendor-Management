@@ -79,7 +79,7 @@ const signUp = async (req, res, next) => {
     });
     await vendor.save();
     let token= await generateJWT(vendor)
-    res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
+    // res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
     res.status(200).json({ message: vendor, token});
   } catch (error) {
     res.status(400).json({ message: error.message,sucess: false });
