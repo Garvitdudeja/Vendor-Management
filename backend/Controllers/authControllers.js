@@ -78,7 +78,7 @@ const signUp = async (req, res, next) => {
     await vendor.save();
     res.json({ message: vendor, token: await generateJWT(vendor) }).status(200);
   } catch (error) {
-    res.json({ error: error.message }).status(400);
+    res.status(400).json({ error: error.message,sucess: false });
   }
 };
 
