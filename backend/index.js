@@ -12,14 +12,11 @@ myapp.use(cors());
 myapp.use('/api/v1/vendors', vendor )
 
 
-  await mongoose
-    .connect(process.env.MongoURI)
-    .then(() => {
+await mongoose.connect(process.env.MongoURI).then(() => {
       console.log("DataBase Connected");
-    })
-    .catch((error) => {
+}).catch((error) => {
       console.log(error);
-    });
+});
 
 
 myapp.get("/", (req, res) => {
