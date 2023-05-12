@@ -23,7 +23,7 @@ const signIn = async (req, res, next) => {
       })
       .status(200);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -82,7 +82,7 @@ const signUp = async (req, res, next) => {
     res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
     res.status(200).json({ message: vendor, token});
   } catch (error) {
-    res.status(400).json({ error: error.message,sucess: false });
+    res.status(400).json({ message: error.message,sucess: false });
   }
 };
 
