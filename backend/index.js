@@ -1,8 +1,9 @@
+import mongoose from 'mongoose';
 import * as dotenv from "dotenv";
 dotenv.config();
 import express from 'express';
 import cors from 'cors';
-// import mongoose from 'mongoose';
+
 // import vendor from './routes/Vendor.js';
 
 const myapp = express();
@@ -11,14 +12,14 @@ myapp.use(cors());
 // myapp.use('/api/v1/vendors', vendor )
 
 
-  // await mongoose
-  //   .connect("mongodb+srv://dudejagarvit3:Garvit1839@cluster0.aa2bbme.mongodb.net/")
-  //   .then(() => {
-  //     console.log("DataBase Connected");
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+  await mongoose
+    .connect(process.env.MongoURI)
+    .then(() => {
+      console.log("DataBase Connected");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
 
 myapp.get("/", (req, res) => {
