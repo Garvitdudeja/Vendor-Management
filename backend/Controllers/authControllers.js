@@ -15,7 +15,7 @@ const signIn = async (req, res, next) => {
       res.json({ message: "Please check or Email address or Password" });
     }
     let token= await generateJWT(vendor)
-    res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
+    // res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
     res
       .json({
         message: "Successfully Loged in",
