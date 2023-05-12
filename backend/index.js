@@ -25,7 +25,7 @@ myapp.use(cors());
 myapp.get("/", (req, res) => {
   res.json({ message: "Request Accepted" });
 });
-myapp.listen(4000, () => {
+myapp.listen(process.env.PORT || 4000, () => {
   console.log("server up and Running");
 });
 
