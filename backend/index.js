@@ -14,7 +14,7 @@ myapp.use("/api/v1/vendors", vendor);
 const connectDB = () => {
   return new Promise((res,rej)=>{
     mongoose
-    .connect("mongodb+srv://dudejagarvit3:Garvit1839@cluster0.aa2bbme.mongodb.net/")
+    .connect(process.env.MongoURI)
     .then(() => {
       console.log("DataBase Connected");
       res("working fine");
