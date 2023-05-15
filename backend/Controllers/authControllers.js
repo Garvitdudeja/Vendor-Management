@@ -17,8 +17,8 @@ const signIn = async (req, res, next) => {
   try {
     const { Email, Password } = req.body.data;
     const vendor = await vendorsModel.findOne({ PrimaryEmailID:Email }).select("+Password");
-    if (!vendor || !vendor.comparePassword(Password, vendor.password)) {
-      res.json({ message: "Please check or Email address or Password" });
+    if (!vendor || !vendor.comparePassword(Password, vendor.Password)) {
+      return res.json({ message: "Please check or Email address or Password" });
     }
     let token = await generateJWT(vendor);
     res.cookie("jwt", token, cookieOptions);
@@ -29,7 +29,7 @@ const signIn = async (req, res, next) => {
       })
       .status(200);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(401).json({ error_message: error.message });
   }
 };
 
@@ -90,7 +90,7 @@ const signUp = async (req, res, next) => {
     res.cookie("jwt", token, cookieOptions);
     res.status(200).json({ message: vendor, token });
   } catch (error) {
-    res.status(400).json({ message: error.message, sucess: false });
+    res.status(400).json({ error_message: error.message, sucess: false });
   }
 };
 

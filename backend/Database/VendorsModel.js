@@ -47,6 +47,7 @@ const VendorSchema = mongoose.Schema({
 VendorSchema.pre("save", async function (next) {
   if (!this.isModified("Password")) return next();
   this.Password = bcypt.hashSync(this.Password, 12);
+  return next()
 });
 
 VendorSchema.methods.comparePassword = function async(oldPassword,newPassword){
