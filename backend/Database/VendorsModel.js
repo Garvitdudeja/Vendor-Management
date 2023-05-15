@@ -11,17 +11,13 @@ const VendorSchema = mongoose.Schema({
   State: String,
   PinCode: {
     type: Number,
-    length: 6,
   },
   ContactPersonName: String,
   PrimaryMobileNumber: {
     type: Number,
-    length: 10,
   },
   SecondaryMobileNumber: {
     type: String,
-    maxLength: 10,
-    minLength: 10,
   },
   PrimaryEmailID: {
     type: String,
@@ -34,7 +30,6 @@ const VendorSchema = mongoose.Schema({
   BankAccountNumber: String,
   BankIFSCCode: {
     type: String,
-    length: 11,
   },
   TypeOfVendor: String,
   FrequencyBillSubmission: String,
@@ -52,11 +47,12 @@ const VendorSchema = mongoose.Schema({
 VendorSchema.pre("save", async function (next) {
   if (!this.isModified("Password")) return next();
   this.Password = bcypt.hashSync(this.Password, 12);
+  return next()
 });
 
-// VendorSchema.methods.comparePassword = function async(oldPassword,newPassword){
-//     return bcypt.compare(oldPassword,newPassword)
-// }
+VendorSchema.methods.comparePassword = function async(oldPassword,newPassword){
+    return bcypt.compare(oldPassword,newPassword)
+}
 
 const vendorsModel = mongoose.model("vendors", VendorSchema);
 export default vendorsModel;
