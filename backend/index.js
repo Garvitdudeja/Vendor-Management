@@ -9,9 +9,9 @@ import vendor from "./routes/Vendor.js";
 import user from "./routes/Users.js";
 
 const myapp = express();
+myapp.use(cors({credentials: true}));
 myapp.use(express.json());
 myapp.use(cookieParser())
-myapp.use(cors({credentials: true}));
 myapp.use("/api/v1/vendors", vendor);
 myapp.use("/api/v1/users", user);
 
