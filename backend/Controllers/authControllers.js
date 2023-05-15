@@ -9,7 +9,7 @@ const cookieOptions = {
 
 function generateJWT(vendor) {
   return new Promise((resolve, reject) => {
-    resolve("Bearer " + jwt.sign({ id: vendor._id }, process.env.JWTSecret,cookieOptions));
+    resolve("Bearer " + jwt.sign({ id: vendor._id }, process.env.JWTSecret,{expiresIn:'10d'}));
   });
 }
 
@@ -21,7 +21,7 @@ const signIn = async (req, res, next) => {
       res.json({ message: "Please check or Email address or Password" });
     }
     let token = await generateJWT(vendor);
-    res.cookie("jwt", token, {expiresIn:'10d'});
+    res.cookie("jwt", token, cookieOptions);
     res
       .json({
         message: "Successfully Loged in",
