@@ -1,21 +1,27 @@
 import vendorsModel from "../Database/VendorsModel.js";
 import jwt from "jsonwebtoken";
 
+const cookieOptions = {
+  expiers: new Date(Date.now + 10 * 24 * 60 * 60 * 1000),
+  httpOnly: true,
+  secure: process.env.enviroment=='Production' ? true : false,
+};
+
 function generateJWT(vendor) {
   return new Promise((resolve, reject) => {
-    resolve("Bearer " + jwt.sign({ id: vendor._id }, process.env.JWTSecret));
+    resolve("Bearer " + jwt.sign({ id: vendor._id }, process.env.JWTSecret,cookieOptions));
   });
 }
 
 const signIn = async (req, res, next) => {
   try {
     const { Email, Password } = req.body.data;
-    const vendor = await vendorsModel.findOne({ Email }).select("+password");
-    if (!vendor && !vendor.comparePassword(password, vendor.password)) {
+    const vendor = await vendorsModel.findOne({ PrimaryEmailID:Email }).select("+Password");
+    if (!vendor && !vendor.comparePassword(Password, vendor.password)) {
       res.json({ message: "Please check or Email address or Password" });
     }
-    let token= await generateJWT(vendor)
-    // res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
+    let token = await generateJWT(vendor);
+    res.cookie("jwt", token, cookieOptions);
     res
       .json({
         message: "Successfully Loged in",
@@ -29,6 +35,7 @@ const signIn = async (req, res, next) => {
 
 const signUp = async (req, res, next) => {
   try {
+    console.log(req.file);
     const {
       NameOfTheCompany,
       Address,
@@ -52,7 +59,7 @@ const signUp = async (req, res, next) => {
       LowerTaxDeductionCertificate,
       PurchaseOfService,
       Password,
-    } = { ...req.body.data };
+    } = { ...req.body };
     const vendor = await vendorsModel.create({
       NameOfTheCompany,
       Address,
@@ -78,11 +85,16 @@ const signUp = async (req, res, next) => {
       Password,
     });
     await vendor.save();
-    let token= await generateJWT(vendor)
-    // res.cookie('jwt',token,{expiers: new Date(Date.now + 10*24*60*60*1000),httpOnly: true,secure:true})
-    res.status(200).json({ message: vendor, token});
+    let token = await generateJWT(vendor);
+
+    res.cookie("jwt", token, {
+      expiers: new Date(Date.now + 10 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: false,
+    });
+    res.status(200).json({ message: vendor, token });
   } catch (error) {
-    res.status(400).json({ message: error.message,sucess: false });
+    res.status(400).json({ message: error.message, sucess: false });
   }
 };
 
