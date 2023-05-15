@@ -17,7 +17,7 @@ const signIn = async (req, res, next) => {
   try {
     const { Email, Password } = req.body.data;
     const vendor = await vendorsModel.findOne({ PrimaryEmailID:Email }).select("+Password");
-    if (!vendor && !vendor.comparePassword(Password, vendor.password)) {
+    if (!vendor || !vendor.comparePassword(Password, vendor.password)) {
       res.json({ message: "Please check or Email address or Password" });
     }
     let token = await generateJWT(vendor);
