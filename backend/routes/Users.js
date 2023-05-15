@@ -6,6 +6,9 @@ const user = Router();
 
 const checkUser = async (req,res,next)=>{
     try{
+    if(!req.cookies.jwt){
+        return res.status(401).json({error: "please Login First"});
+    }
     const id =jwt.verify(req.cookies.jwt.split(' ')[1], process.env.JWTSecret).id;
     req.id = id;
     next();
