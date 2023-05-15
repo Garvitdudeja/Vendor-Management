@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 const cookieOptions = {
   // expiers: new Date(Date.now + 10 * 24 * 60 * 60 * 1000),
-  httpOnly: false,
+  httpOnly: true,
   maxAge: 86400000,
   sameSite:'none',
   secure: true
