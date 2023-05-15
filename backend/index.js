@@ -9,7 +9,7 @@ import vendor from "./routes/Vendor.js";
 import user from "./routes/Users.js";
 
 const myapp = express();
-myapp.use(cors({ credentials: true, origin: true, allowedHeaders:true }));
+myapp.use(cors({ credentials: true, origin: "*", allowedHeaders:true }));
 myapp.use(express.json());
 myapp.use(cookieParser());
 myapp.use("/api/v1/vendors", vendor);
