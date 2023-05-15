@@ -1,4 +1,4 @@
-const whitelist = ['http://localhost:3000',"*"];
+const whitelist = ['http://localhost:3000',"https://vendor-front-kappa.vercel.app/"];
 export default  function (req, callback) {
   let corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
