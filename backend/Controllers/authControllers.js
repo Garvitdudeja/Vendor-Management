@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 const cookieOptions = {
   expiers: new Date(Date.now + 10 * 24 * 60 * 60 * 1000),
   httpOnly: true,
-  secure: process.env.enviroment=='Production' ? true : false,
+  // secure: process.env.enviroment=='Production' ? true : false,
 };
 
 function generateJWT(vendor) {
