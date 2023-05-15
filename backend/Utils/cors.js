@@ -1,7 +1,7 @@
 const whitelist = ['http://localhost:3000',"https://vendor-front-kappa.vercel.app/"];
 export default  function (req, callback) {
   let corsOptions;
-  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+//   if (whitelist.indexOf(req.header('Origin')) !== -1) {
     corsOptions = {
       origin: true,
       credentials: true,
@@ -9,8 +9,8 @@ export default  function (req, callback) {
       methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     };
-  } else {
-    corsOptions = { origin: false };
-  }
+//   } else {
+//     corsOptions = { origin: false };
+//   }
   callback(null, corsOptions);
 };
