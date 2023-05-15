@@ -59,7 +59,7 @@ const signUp = async (req, res, next) => {
       LowerTaxDeductionCertificate,
       PurchaseOfService,
       Password,
-    } = { ...req.body };
+    } = { ...req.body.data };
     const vendor = await vendorsModel.create({
       NameOfTheCompany,
       Address,
