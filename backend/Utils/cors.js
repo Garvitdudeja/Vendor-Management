@@ -5,6 +5,7 @@ export default  function (req, callback) {
     corsOptions = {
       origin: true,
       credentials: true,
+      withCredentials: true,
       methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     };
