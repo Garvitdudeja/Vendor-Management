@@ -21,7 +21,7 @@ const signIn = async (req, res, next) => {
       res.json({ message: "Please check or Email address or Password" });
     }
     let token = await generateJWT(vendor);
-    res.cookie("jwt", token, cookieOptions);
+    res.cookie("jwt", token, {expiresIn:'10d'});
     res
       .json({
         message: "Successfully Loged in",
@@ -87,11 +87,7 @@ const signUp = async (req, res, next) => {
     await vendor.save();
     let token = await generateJWT(vendor);
 
-    res.cookie("jwt", token, {
-      expiers: new Date(Date.now + 10 * 24 * 60 * 60 * 1000),
-      httpOnly: true,
-      secure: false,
-    });
+    res.cookie("jwt", token, cookieOptions);
     res.status(200).json({ message: vendor, token });
   } catch (error) {
     res.status(400).json({ message: error.message, sucess: false });
