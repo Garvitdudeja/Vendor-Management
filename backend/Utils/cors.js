@@ -6,6 +6,7 @@ export default  function (req, callback) {
       origin: true,
       credentials: true,
       methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     };
   } else {
     corsOptions = { origin: false };
