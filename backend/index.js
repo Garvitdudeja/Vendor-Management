@@ -18,7 +18,7 @@ myapp.use("/api/v1/users", user);
 
 
 
-const connectDB = () => {
+const connectDB = async() => {
   return new Promise((res,rej)=>{
     mongoose
     .connect(process.env.MongoURI)
