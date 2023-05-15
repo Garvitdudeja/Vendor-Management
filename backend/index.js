@@ -4,19 +4,13 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import corsOptions from './Utils/cors.js'
 import vendor from "./routes/Vendor.js";
 import user from "./routes/Users.js";
 
 const myapp = express();
-myapp.use(cors({ credentials: true, origin: "*" }));
-myapp.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-  next();
-});
+myapp.use(cors(corsOptions));
+
 myapp.use(express.json());
 myapp.use(cookieParser());
 myapp.use("/api/v1/vendors", vendor);
