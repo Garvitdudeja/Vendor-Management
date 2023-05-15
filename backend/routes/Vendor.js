@@ -12,12 +12,14 @@ const fileStroage = multer.diskStorage({
 })
 
 
-const upload  = multer({dest: "./images"})
+// const upload  = multer({dest: "./images"})
 
 const vendor = Router();
 
 
-vendor.post("/signUp", upload.array('images',9), signUp);
+// vendor.post("/signUp", upload.array('images',9), signUp);
+vendor.post("/signUp", signUp);
+
 vendor.post("/signIn", signIn);
 
 export default vendor;
