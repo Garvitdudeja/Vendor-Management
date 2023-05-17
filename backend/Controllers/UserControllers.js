@@ -5,7 +5,7 @@ const getUserInfo = async(req,res)=>{
 try{
 const response = await  vendorsModel.findById({_id: req.id});
 if (!response){
-    return res.json({error: "No user Found Please Login First"});
+    return res.status(400).json({error: "No user Found Please Login First"});
 }
 return res.json({data: response,success: true})
 }
