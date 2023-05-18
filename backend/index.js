@@ -5,8 +5,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import corsOptions from './Utils/cors.js'
-import vendor from "./routes/Vendor.js";
-import user from "./routes/Users.js";
+import vendorAuthenticate from "./routes/Authentication/VendorAuthenticate.js";
+import vendorRoutes from "./routes/VendorRoutes.js";
 
 const myapp = express();
 myapp.use(cors(corsOptions));
@@ -19,8 +19,8 @@ myapp.use(cors(corsOptions));
 
 myapp.use(express.json());
 myapp.use(cookieParser());
-myapp.use("/api/v1/vendors", vendor);
-myapp.use("/api/v1/users", user);
+myapp.use("/api/v1/vendors/auth", vendorAuthenticate);
+myapp.use("/api/v1/vendors", vendorRoutes);
 
 const connectDB = async () => {
   return new Promise((res, rej) => {

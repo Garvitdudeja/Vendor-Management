@@ -42,6 +42,10 @@ const VendorSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  Invoices:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'invoices'
+  }]
 });
 
 VendorSchema.pre("save", async function (next) {

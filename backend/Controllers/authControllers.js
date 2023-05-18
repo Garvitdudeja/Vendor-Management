@@ -97,4 +97,10 @@ const signUp = async (req, res, next) => {
   }
 };
 
-export { signIn, signUp };
+
+const signOut = (req,res)=>{
+  res.clearCookie('jwt');
+  res.end();
+}
+
+export { signIn, signUp, signOut };
