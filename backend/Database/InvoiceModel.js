@@ -3,9 +3,12 @@ import mongoose from 'mongoose';
 const invoiceSchema = mongoose.Schema({
     invoicenumber:Number,
     vendorid:{type:mongoose.Schema.Types.ObjectId,ref:'vendors'},
-    invoicedate:Date,
+    invoicedate:String,
     invoicecurrency:String,
-    invoiceamount:Number,
+    invoiceamount:{
+        type: Number,
+        required: [true, "Please Add invoice amount"]
+    },
     invoicestatus:{
         type: String,
         default: "pending"

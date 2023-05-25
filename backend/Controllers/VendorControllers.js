@@ -1,6 +1,7 @@
-
+import jwt from 'jsonwebtoken'
 import invoiceModel from "../Database/InvoiceModel.js";
 import vendorsModel from "../Database/VendorsModel.js";
+import mongoose from 'mongoose';
 
 //checking the Venodr from the cookies received from the frontend
 const checkVendor = async (req,res,next)=>{
@@ -32,15 +33,28 @@ return res.status(400).json({message: error.message})
 }    
 }
 
-
 //Adding a invoice
 const addInvoice = async(req,res)=>{
-    const getUserInfo = await vendorsModel.findById({_id: req.id});
-    if(!getUserInfo){
-        return res.status(401).json({message: "Please retry Login"})
+const session = await mongoose.startSession();
+
+    try{
+        session.startTransaction();
+        const getUserInfo = await vendorsModel.findById({_id: req.id}).session(session);
+        const { invoiceamount, invoicecurrency, invoicedate} = {...req.body.data}
+        const addInvoice = await invoiceModel.create([{invoiceamount,invoicecurrency,vendorid:req.id,invoicedate}],{session});
+        const addToVendor = await vendorsModel.findByIdAndUpdate({_id:req.id},{$push:{Invoices: addInvoice[0]._id}}).session(session);
+        if(addToVendor==null){
+            throw new Error("No Such User Exist");
+        }
+        session.commitTransaction();
+    res.json({message:"Invoice sucessfully added",response:addToVendor})
+    }catch(error){
+        // console.log("here")
+        session.abortTransaction();
+        return res.status(406).json({error:error.message})
+    }finally{
+        // session.endSession()
     }
-    const {invoicestatus, invoiceamount, invoicecurrency, invoicedate, vendorid} = {...req.body.data}
-    const addInvoice = await invoiceModel.create({});
 
 }
 
