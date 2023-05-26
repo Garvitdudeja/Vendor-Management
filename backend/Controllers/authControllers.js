@@ -2,25 +2,33 @@ import vendorsModel from "../Database/VendorsModel.js";
 import jwt from "jsonwebtoken";
 
 const cookieOptions = {
-  // expiers: new Date(Date.now + 10 * 24 * 60 * 60 * 1000),
   httpOnly: true,
   maxAge: 86400000,
-  sameSite:'None',
-  secure: process.env.enviroment =='Production' ? true: false,
+  sameSite: "none",
+  secure: true,
 };
 
 function generateJWT(vendor) {
   return new Promise((resolve, reject) => {
-    resolve("Bearer " + jwt.sign({ id: vendor._id }, process.env.JWTSecret,{expiresIn:'10d'}));
+    resolve(
+      "Bearer " +
+        jwt.sign({ id: vendor._id }, process.env.JWTSecret, {
+          expiresIn: "10d",
+        })
+    );
   });
 }
 
 const signIn = async (req, res, next) => {
   try {
     const { Email, Password } = req.body.data;
-    const vendor = await vendorsModel.findOne({ PrimaryEmailID:Email }).select("+Password");
+    const vendor = await vendorsModel
+      .findOne({ PrimaryEmailID: Email })
+      .select("+Password");
     if (!vendor || !vendor.comparePassword(Password, vendor.Password)) {
-      return res.status(400).json({ message: "Please check or Email address or Password" });
+      return res
+        .status(400)
+        .json({ message: "Please check or Email address or Password" });
     }
     let token = await generateJWT(vendor);
     res.cookie("jwt", token, cookieOptions);
@@ -96,10 +104,9 @@ const signUp = async (req, res, next) => {
   }
 };
 
-
-const signOut = (req,res)=>{
-  res.clearCookie('jwt');
+const signOut = (req, res) => {
+  res.clearCookie("jwt");
   res.end();
-}
+};
 
 export { signIn, signUp, signOut };
