@@ -25,7 +25,7 @@ const signIn = async (req, res, next) => {
     const vendor = await vendorsModel
       .findOne({ PrimaryEmailID: Email })
       .select("+Password");
-    if (!vendor || !vendor.comparePassword(Password, vendor.Password)) {
+    if (!vendor || !await vendor.comparePassword(Password, vendor.Password)) {
       return res
         .status(400)
         .json({ message: "Please check or Email address or Password" });
