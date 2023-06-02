@@ -5,7 +5,7 @@ const cookieOptions = {
   httpOnly: true,
   maxAge: 86400000,
   sameSite: "lax",
-  secure: true,
+  secure: false,
 };
 
 function generateJWT(vendor) {

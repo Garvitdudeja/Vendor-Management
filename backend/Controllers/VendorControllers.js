@@ -42,7 +42,7 @@ const session = await mongoose.startSession();
         const getUserInfo = await vendorsModel.findById({_id: req.id}).session(session);
         const { invoiceamount, invoicecurrency, invoicedate} = {...req.body.data}
         const addInvoice = await invoiceModel.create([{invoiceamount,invoicecurrency,vendorid:req.id,invoicedate}],{session});
-        const addToVendor = await vendorsModel.findByIdAndUpdate({_id:req.id},{$push:{Invoices: addInvoice[0]._id}}).session(session);
+        const addToVendor = await vendorsModel.findByIdAndUpdate({_id:req.id},{$push:{Invoices: addInvoice[0]._id}},{new:true}).session(session);
         if(addToVendor==null){
             throw new Error("No Such User Exist");
         }

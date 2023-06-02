@@ -36,10 +36,10 @@ const connectDB = async () => {
   });
 };
 await connectDB();
-myapp.get("/", (req, res) => {
-  res.cookie("jwt", "21323", { httpOnly: true, maxAge: 86400000 });
-  res.json({ message: "Request Accepted" });
-});
+// myapp.get("/", (req, res) => {
+//   res.cookie("jwt", "21323", { httpOnly: true, maxAge: 86400000 });
+//   res.json({ message: "Request Accepted" });
+// });
 myapp.listen(process.env.PORT || 4000, () => {
   console.log("server up and Running");
 });
